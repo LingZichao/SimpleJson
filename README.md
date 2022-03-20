@@ -17,10 +17,10 @@
 
 using namespace SimpleJson;
 int main() {
-    SimpleJson::Json j;
+	SimpleJson::Json j;
 	//基本类型
-    j.push_back({"status" , true});
-    j.push_back({"msg" , "success"});
+	j.push_back({"status" , true});
+	j.push_back({"msg" , "success"});
 	j.push_back({"obj" , 
 		{ 
 			{"name" , "ARX"} , 
@@ -31,17 +31,17 @@ int main() {
 	//加入Json对象数组
 	std::vector< SimpleJson::Object > m;
 	m.push_back( { {"key" , "test1"} , {"[pos]" , 1} }) ;
-    j.push_back({"data" , m} );
+	j.push_back({"data" , m} );
 
 	//加入Json数组，说明设计的‘一次性’
 	std::vector<double> q {1.1 , 3.3 , 5.5, 20001128 ,-7 ,8.134};
-    for(auto &it : q) {
-    	printf("%lf\n" , it); //std::move之前
+	for(auto &it : q) {
+		printf("%lf\n" , it); //std::move之前
 	}
 	j.push_back({"data" , q} );
 	printf("数据push_back后就不能使用了, 都为一次性用品QAQ\n");
-    for(auto &it : q) {
-    	printf("%lf\n" , it); //std::move之后——没有输出
+	for(auto &it : q) {
+		printf("%lf\n" , it); //std::move之后——没有输出
 	}
 
 	//将以上项目字符串化并输出
