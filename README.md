@@ -18,7 +18,6 @@
 using namespace SimpleJson;
 int main() {
     SimpleJson::Json j;
-
 	//基本类型
     j.push_back({"status" , true});
     j.push_back({"msg" , "success"});
