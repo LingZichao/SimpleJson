@@ -113,7 +113,7 @@ class Json {
     char *buff = nullptr;
 	JsonItemCluster items;
     
-    void handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) ;
+    void handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) noexpect;
 public :
 	Json() = default;
 	Json(Json && _j) : cur(_j.cur) , buff(_j.buff) , items( std::move(_j.items) ) {}
