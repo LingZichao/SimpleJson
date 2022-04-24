@@ -43,7 +43,7 @@ def_Helper(std::string 	, String 	, STRING );
 def_Helper(std::vector<int> 		, IntArray 		, INT_ARRAY);
 def_Helper(std::vector<double> 		, DoubleArray 	, DOUBLE_ARRAY);
 def_Helper(std::vector<bool> 		, BoolArray 	, BOOL_ARRAY);
-def_Helper(std::vector<std::string> , StringArray 	, INT_ARRAY);
+def_Helper(std::vector<std::string> , StringArray 	, STRING_ARRAY);
 
 //json-object definition
 class JsonItemObject: public JsonItemBase {
@@ -99,7 +99,9 @@ public :
 		ptr = new JsonItemBoolArray(_key , _val);
 	}	
 	JsonCtor(std::string _key , std::vector<std::string> &_val){
+
 		ptr = new JsonItemStringArray(_key , _val );
+
 	}
 };
 // just for easy use...
@@ -113,7 +115,7 @@ class Json {
     char *buff = nullptr;
 	JsonItemCluster items;
     
-    void handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) noexpect;
+    void handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) noexcept;
 public :
 	Json() = default;
 	Json(Json && _j) : cur(_j.cur) , buff(_j.buff) , items( std::move(_j.items) ) {}
@@ -122,12 +124,11 @@ public :
 *	@param _item 记录K-V对。请用 ' , ' 代替Json中的 ' : '，并使用'{ }'包括起来。
 */ 
 	void push_back(JsonCtor _item) {
-        buff = nullptr;
 		items.push_back( _item.ptr );
 	}
 /**
 *	@brief 将Json文件字符串化
-*   @return const char* 指向结果的字符串
+*   	@return const char* 指向结果的字符串
 */ 
     const char* stringize() {
         if(buff != nullptr) return buff;
@@ -140,7 +141,7 @@ public :
     }
 /**
 *	@brief 返回Json文件字符串化后，该字符串的长度。如没有stringize()，则为0
-*   @return size_t 结果字符串的长度
+*   	@return size_t 结果字符串的长度
 */    
     size_t length() const {return cur;}
     ~Json() {
@@ -150,7 +151,7 @@ public :
 };
 
 //helper function for base-ptr classification  and stringize()
-void Json::handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) noexcept {
+inline void Json::handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cur ) noexcept {
     for(auto&it : items) {
     	if(it->key.length()) {
 	        BUFF_ADD('"');
@@ -220,9 +221,9 @@ void Json::handleItemBaseVector(JsonItemCluster &items , char *buff , size_t &cu
             }
             case ItemType::BOOL_ARRAY : 
             {
-                JsonItemIntArray* p= dynamic_cast<JsonItemIntArray *>(it);
+                JsonItemBoolArray* p= dynamic_cast<JsonItemBoolArray *>(it);
                 BUFF_ADD('[');
-                for(auto &val : p->value) {
+                for(auto val : p->value) {
                 	if(val) {strcpy(buff + cur , "true");  cur += 4;}
                 	else    {strcpy(buff + cur , "false"); cur += 5;}                	
 					BUFF_ADD(',');
