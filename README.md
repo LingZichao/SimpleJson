@@ -1,6 +1,6 @@
 # SimpleJson——轻量级Json构建、字符串化练习
 
-使用`C++11`实现~~但是性能甚至不`node.js~~的简陋Json库，大量使用STL参数所以常数开销不小，因此使用`std::move`进行了一丝丝补救，反正不敢跑benchmark（还不支持反向Json化（逃
+使用`C++11`实现~~但是性能甚至不如node.js~~的简陋Json库，大量使用STL参数所以常数开销不小，因此使用`std::move`进行了一丝丝补救，反正不敢跑benchmark（还不支持反向Json化（逃
 
 ## Feature OR Annoyance
 
